@@ -1,0 +1,4 @@
+services:
+#    elevator.example:
+#        class: Elevator\ElevatorBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

@@ -1,0 +1,4 @@
+elevator:
+    resource: "@ElevatorBundle/Controller/"
+    type:     annotation
+    prefix:   /

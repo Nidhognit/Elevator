@@ -1,0 +1,4 @@
+.checkout
+=========
+
+A Symfony project 
