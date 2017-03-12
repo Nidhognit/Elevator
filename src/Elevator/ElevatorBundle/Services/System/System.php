@@ -25,8 +25,12 @@ class System
      */
     protected $moveStatus = 0;
 
-    public function run()
+    public function run($stopButton = false)
     {
+        if($stopButton){
+            $this->elevator->clickStop();
+        }
+
         if ($this->isStopInCurrentFloor()) {
             $this->addMessage('Лифт остановился на ' . $this->currentFloor->getFloorNumber() . ' этаже');
             $this->readCurrentFloor();
@@ -76,7 +80,7 @@ class System
 
         foreach ($cargos as $cargo) {
             $this->elevator->addCargo($cargo);
-            $this->addMessage('Человек заходит в лифт и нажимает кнопку ' . $cargo->getGoalFloor()->getFloorNumber() . ' этажа ');
+            $this->addMessage('Человек заходит в лифт и нажимает кнопку ' . $cargo->getGoalFloor()->getFloorNumber() . ' этажа');
         }
 
         $this->elevator->closeDor();

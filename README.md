@@ -1,7 +1,13 @@
 Elevator
 =========
 
-Run exemple in console:
+before start project, you must run:
+
+```
+composer update 
+```
+
+Run example in console:
 ```
 bin/console elevator:run
 ```

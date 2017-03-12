@@ -19,12 +19,15 @@ class Elevator
     /** @var  ElevatorPanel */
     protected $elevatorPanel;
 
+    protected $stop = false;
+
     /**
      * @return bool
      */
     public function move(): bool
     {
         $status = $this->isOpenDor;
+        $status *= !$this->stop;
 
         if ($this->maxWeight !== null) {
             $weight = 0;
@@ -129,5 +132,10 @@ class Elevator
     public function setElevatorPanel(ElevatorPanel $elevatorPanel)
     {
         $this->elevatorPanel = $elevatorPanel;
+    }
+
+    public function clickStop()
+    {
+        $this->stop = !$this->stop;
     }
 }
