@@ -18,12 +18,6 @@ class ElevatorCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this->setName('elevator:run')
-            ->addOption(
-                'sql',
-                null,
-                InputOption::VALUE_NONE,
-                'Use "SQL" instead "Entity"'
-            )
             ->setDescription('Simulation of the elevator operation');
     }
 

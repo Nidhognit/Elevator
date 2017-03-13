@@ -24,21 +24,19 @@ class Elevator
     /**
      * @return bool
      */
-    public function move(): bool
+    public function canNotMove(): bool
     {
-        $status = $this->isOpenDor;
-        $status *= !$this->stop;
-
+        $status = false;
         if ($this->maxWeight !== null) {
             $weight = 0;
             foreach ($this->cargos as $cargo) {
                 $weight += $cargo->getWeight();
             }
 
-            $status *= $this->maxWeight > $weight;
+            $status = $this->maxWeight > $weight;
         }
 
-        return $status;
+        return $status || $this->stop || $this->isOpenDor;
     }
 
     /**

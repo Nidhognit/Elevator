@@ -37,7 +37,9 @@ class Builder
      */
     public function setFloorCount(int $floorCount)
     {
-        $this->floorCount = $floorCount;
+        if ($floorCount > 1) {
+            $this->floorCount = $floorCount;
+        }
 
         return $this;
     }
@@ -49,6 +51,17 @@ class Builder
     public function setElevatorMaxWeight(float $elevatorMaxWeight)
     {
         $this->elevatorMaxWeight = $elevatorMaxWeight;
+
+        return $this;
+    }
+
+    /**
+     * @param float $floorHeight
+     * @return $this
+     */
+    public function setFloorHeight(float $floorHeight)
+    {
+        $this->floorHeight = $floorHeight;
 
         return $this;
     }
@@ -73,9 +86,12 @@ class Builder
     {
         /** @var Floor[] $floorList */
         $floorList = [];
-        for ($floorNumber = 1; $floorNumber-1 < $this->floorCount; ++$floorNumber) {
+        for ($floorNumber = 1; $floorNumber - 1 < $this->floorCount; ++$floorNumber) {
             $floor = new Floor();
             $floor->setFloorNumber($floorNumber);
+            if ($this->floorHeight > 0) {
+                $floor->setHeight($this->floorHeight);
+            }
             $floor->setControlPanel($this->getControlPanelByType($this->typeControlPanel));
             $floorList[$floorNumber] = $floor;
         }
@@ -84,6 +100,9 @@ class Builder
         $elevatorPanel = new ElevatorPanel();
         $elevatorPanel->setSystem($system);
         $elevator->setElevatorPanel($elevatorPanel);
+        if ($this->elevatorMaxWeight > 0) {
+            $elevator->setMaxWeight($this->elevatorMaxWeight);
+        }
 
         foreach ($this->cargoList as $cargoTask) {
             $cargo = $this->getCargoByType($cargoTask['type']);

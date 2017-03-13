@@ -39,6 +39,27 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(5, $system->getFloorList());
     }
 
+    public function testCreateInvalidFloorCount()
+    {
+        $builder = new Builder();
+
+        $system = $builder->setFloorCount(1)
+            ->create();
+
+        $this->assertCount(4, $system->getFloorList());
+    }
+
+    public function testCreateInvalidFloorHeigth()
+    {
+        $builder = new Builder();
+
+        $system = $builder->setFloorCount(4)
+            ->setFloorHeight(0)
+            ->create();
+
+        $this->assertEquals($system->getFloorList()[1]->getHeight(), 4);
+    }
+
     /**
      * @expectedException \InvalidArgumentException
      */

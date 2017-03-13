@@ -27,19 +27,26 @@ class System
 
     public function run($stopButton = false)
     {
-        if($stopButton){
+        if ($stopButton) {
             $this->elevator->clickStop();
         }
 
-        if ($this->isStopInCurrentFloor()) {
-            $this->addMessage('Лифт остановился на ' . $this->currentFloor->getFloorNumber() . ' этаже');
-            $this->readCurrentFloor();
-            $this->removeExecutedTask();
-            $this->move();
-        } else {
-            $this->addMessage('Лифт проехал мимо ' . $this->currentFloor->getFloorNumber() . ' этажа не останавливаясь');
+        if (!$this->elevator->canNotMove()) {
+            if ($this->isStopInCurrentFloor()) {
+                $this->addMessage('Лифт остановился на ' . $this->currentFloor->getFloorNumber() . ' этаже');
+                $this->readCurrentFloor();
+                $this->removeExecutedTask();
+                $this->move();
+            } else {
+                $this->addMessage('Лифт проехал мимо ' . $this->currentFloor->getFloorNumber() . ' этажа не останавливаясь');
+            }
         }
-        $this->choiceNextFloor();
+
+        if (!$this->elevator->canNotMove()) {
+            $this->choiceNextFloor();
+        }else{
+            $this->addMessage('Лифт стоит на ' . $this->currentFloor->getFloorNumber() . ' этаже в связи с тем что нажата кнопка стоп или произошел перегруз');
+        }
 
         return !empty($this->taskList);
     }
@@ -87,7 +94,6 @@ class System
         $this->addMessage('Двери лифта закрываются');
 
         $controlPanel->disable();
-
     }
 
     protected function removeExecutedTask()
